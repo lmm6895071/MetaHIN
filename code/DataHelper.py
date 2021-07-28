@@ -22,6 +22,7 @@ class DataHelper:
 
     def load_data(self, data_set, state, load_from_file=True):
         data_dir = os.path.join(self.output_dir,data_set)
+        print("=====================", data_dir)
         supp_xs_s = []
         supp_ys_s = []
         supp_mps_s = []
