@@ -13,7 +13,7 @@ random.seed(13)
 # %%
 input_dir = 'original/'
 output_dir = './'
-melu_output_dir = '../../../MeLU/movielens/'
+melu_output_dir = '../MeLU/movielens/'
 states = [ "warm_up", "user_cold_testing", "item_cold_testing", "user_and_item_cold_testing","meta_training"]
 
 if not os.path.exists("{}/meta_training/".format(output_dir)):
