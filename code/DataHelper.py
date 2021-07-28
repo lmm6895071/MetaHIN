@@ -54,7 +54,7 @@ class DataHelper:
 #                 ml.support_query_data()
 
             training_set_size = int(len(glob.glob("{}/{}/*.pkl".format(data_dir,state))) / self.config['file_num'])  # support, query
-
+            print('======================', training_set_size)
             # load all data
             for idx in tqdm(range(training_set_size)):
                 support_x = pickle.load(open("{}/{}/support_x_{}.pkl".format(data_dir, state, idx), "rb"))
