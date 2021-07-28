@@ -111,7 +111,7 @@ if __name__ == "__main__":
 
     input_dir = '../data/'
     output_dir = '../data/'
-    res_dir = '../res/'+data_set
+    res_dir = '../res/'+ data_set
     load_model = False
 
     if data_set == 'movielens':
