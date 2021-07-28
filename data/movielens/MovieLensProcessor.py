@@ -10,7 +10,6 @@ import pickle
 import os
 from tqdm import tqdm
 random.seed(13)
-
 # %%
 input_dir = 'original/'
 output_dir = './'
@@ -69,33 +68,33 @@ zipcode_list = load_list("{}/m_zipcode.txt".format(input_dir))
 len(rate_list), len(genre_list), len(actor_list), len(director_list), len(gender_list), len(age_list), len(occupation_list), len(zipcode_list)
 
 # %%
-    def item_converting(row, rate_list, genre_list, director_list, actor_list):
-        rate_idx = torch.tensor([[rate_list.index(str(row['rate']))]]).long()
-        genre_idx = torch.zeros(1, 25).long()
-        for genre in str(row['genre']).split(", "):
-            idx = genre_list.index(genre)
-            genre_idx[0, idx] = 1  # one-hot vector
-        
-        director_idx = torch.zeros(1, 2186).long()
-        director_id = []
-        for director in str(row['director']).split(", "):
-            idx = director_list.index(re.sub(r'\([^()]*\)', '', director))
-            director_idx[0, idx] = 1
-            director_id.append(idx+1)  # id starts from 1, not index
-        actor_idx = torch.zeros(1, 8030).long()
-        actor_id = []
-        for actor in str(row['actors']).split(", "):
-            idx = actor_list.index(actor)
-            actor_idx[0, idx] = 1
-            actor_id.append(idx+1)
-        return torch.cat((rate_idx, genre_idx), 1), torch.cat((rate_idx, genre_idx, director_idx, actor_idx), 1), director_id, actor_id
+def item_converting(row, rate_list, genre_list, director_list, actor_list):
+    rate_idx = torch.tensor([[rate_list.index(str(row['rate']))]]).long()
+    genre_idx = torch.zeros(1, 25).long()
+    for genre in str(row['genre']).split(", "):
+        idx = genre_list.index(genre)
+        genre_idx[0, idx] = 1  # one-hot vector
+    
+    director_idx = torch.zeros(1, 2186).long()
+    director_id = []
+    for director in str(row['director']).split(", "):
+        idx = director_list.index(re.sub(r'\([^()]*\)', '', director))
+        director_idx[0, idx] = 1
+        director_id.append(idx+1)  # id starts from 1, not index
+    actor_idx = torch.zeros(1, 8030).long()
+    actor_id = []
+    for actor in str(row['actors']).split(", "):
+        idx = actor_list.index(actor)
+        actor_idx[0, idx] = 1
+        actor_id.append(idx+1)
+    return torch.cat((rate_idx, genre_idx), 1), torch.cat((rate_idx, genre_idx, director_idx, actor_idx), 1), director_id, actor_id
 
-    def user_converting(row, gender_list, age_list, occupation_list, zipcode_list):
-        gender_idx = torch.tensor([[gender_list.index(str(row['gender']))]]).long()
-        age_idx = torch.tensor([[age_list.index(str(row['age']))]]).long()
-        occupation_idx = torch.tensor([[occupation_list.index(str(row['occupation_code']))]]).long()
-        zip_idx = torch.tensor([[zipcode_list.index(str(row['zip'])[:5])]]).long()
-        return torch.cat((gender_idx, age_idx, occupation_idx, zip_idx), 1)  # (1, 4)
+def user_converting(row, gender_list, age_list, occupation_list, zipcode_list):
+    gender_idx = torch.tensor([[gender_list.index(str(row['gender']))]]).long()
+    age_idx = torch.tensor([[age_list.index(str(row['age']))]]).long()
+    occupation_idx = torch.tensor([[occupation_list.index(str(row['occupation_code']))]]).long()
+    zip_idx = torch.tensor([[zipcode_list.index(str(row['zip'])[:5])]]).long()
+    return torch.cat((gender_idx, age_idx, occupation_idx, zip_idx), 1)  # (1, 4)
 
 # %%
 # hash map for item
@@ -126,14 +125,14 @@ for idx, row in user_data.iterrows():
 states = [ "warm_up", "user_cold_testing", "item_cold_testing", "user_and_item_cold_testing","meta_training"]
 
 # %%
-    import collections
-    def reverse_dict(d):
-        # {1:[a,b,c], 2:[a,f,g],...}
-        re_d = collections.defaultdict(list)
-        for k, v_list in d.items():
-            for v in v_list:
-                re_d[v].append(k)
-        return dict(re_d)
+import collections
+def reverse_dict(d):
+    # {1:[a,b,c], 2:[a,f,g],...}
+    re_d = collections.defaultdict(list)
+    for k, v_list in d.items():
+        for v in v_list:
+            re_d[v].append(k)
+    return dict(re_d)
 
 # %%
 a_movies = reverse_dict(m_actors)
