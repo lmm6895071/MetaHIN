@@ -19,11 +19,16 @@ states = [ "warm_up", "user_cold_testing", "item_cold_testing", "user_and_item_c
 if not os.path.exists("{}/meta_training/".format(output_dir)):
     os.mkdir("{}/log/".format(output_dir))
     for state in states:
-        os.mkdir("{}/{}/".format(output_dir, state))
-        os.mkdir("{}/{}/".format(melu_output_dir, state))
+        _path = "{}/{}/".format(output_dir, state)
+        if not os.path.exists(_path):
+            os.mkdir(_path)
+        _path = "{}/{}/".format(melu_output_dir, state)
+        if not os.path.exists(_path):
+            os.mkdir(_path)
         if not os.path.exists("{}/{}/{}".format(output_dir, "log", state)):
             os.mkdir("{}/{}/{}".format(output_dir, "log", state))
-
+            
+print('====================')
 # %%
 ui_data = pd.read_csv(input_dir+'ratings.dat', names=['user', 'item', 'rating', 'timestamp'],sep="::", engine='python')
 len(ui_data)
