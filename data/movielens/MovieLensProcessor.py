@@ -17,7 +17,8 @@ melu_output_dir = '../MeLU/movielens/'
 states = [ "warm_up", "user_cold_testing", "item_cold_testing", "user_and_item_cold_testing","meta_training"]
 
 if not os.path.exists("{}/meta_training/".format(output_dir)):
-    os.mkdir("{}/log/".format(output_dir))
+    if not os.path.exists("{}/log/".format(output_dir)):
+        os.mkdir("{}/log/".format(output_dir))
     for state in states:
         _path = "{}/{}/".format(output_dir, state)
         if not os.path.exists(_path):
