@@ -11,7 +11,7 @@ from HeteML_new import HML
 from DataHelper import DataHelper
 from tqdm import tqdm
 from Config import states
-# random.seed(13)
+random.seed(13)
 np.random.seed(13)
 torch.manual_seed(13)
 
@@ -32,6 +32,7 @@ def training(model, model_save=True, model_file=None, device='cpu'):
 
         random.shuffle(train_data)
         num_batch = int(len(train_data) / batch_size)  # ~80
+        print("---------------", num_batch)
         supp_xs_s, supp_ys_s, supp_mps_s, query_xs_s, query_ys_s, query_mps_s = zip(*train_data)  # supp_um_s:(list,list,...,2553)
         for i in range(num_batch):  # each batch contains some tasks (each task contains a support set and a query set)
             support_xs = list(supp_xs_s[batch_size * i:batch_size * (i + 1)])
