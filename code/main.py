@@ -16,7 +16,7 @@ np.random.seed(13)
 torch.manual_seed(13)
 
 
-def training(model, model_save=True, model_file=None, device='cpu'):
+def training(model,train_data, model_save=True, model_file=None, device='cpu'):
     print('training model...')
     if config['use_cuda']:
         model.cuda()
@@ -145,7 +145,7 @@ if __name__ == "__main__":
         train_data = data_helper.load_data(data_set=data_set,state='meta_training',load_from_file=True)
         # print('loading warm data...')
         # warm_data = data_helper.load_data(data_set=data_set, state='warm_up',load_from_file=True)
-        training(hml, model_save=True, model_file=model_filename,device=cuda_or_cpu)
+        training(hml, train_data, model_save=True, model_file=model_filename,device=cuda_or_cpu)
     else:
         trained_state_dict = torch.load(model_filename)
         hml.load_state_dict(trained_state_dict)
