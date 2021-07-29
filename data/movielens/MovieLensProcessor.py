@@ -3,7 +3,7 @@ import os
 import json
 import pandas as pd
 import numpy as np
-import torch
+# import torch
 import re
 import random
 import pickle
@@ -30,11 +30,16 @@ if not os.path.exists("{}/meta_training/".format(output_dir)):
             os.mkdir("{}/{}/{}".format(output_dir, "log", state))
             
 print('====================')
-# %%
-ui_data = pd.read_csv(input_dir+'ratings.dat', names=['user', 'item', 'rating', 'timestamp'],sep="::", engine='python')
-len(ui_data)
 
 # %%
+input_dir = 'original/'
+output_dir = './'
+melu_output_dir = '../MeLU/movielens/'
+states = [ "warm_up", "user_cold_testing", "item_cold_testing", "user_and_item_cold_testing","meta_training"]
+ 
+ui_data = pd.read_csv(input_dir+'ratings.dat', names=['user', 'item', 'rating', 'timestamp'], sep="::", engine='python')
+len(ui_data)
+
 user_data = pd.read_csv(input_dir+'users.dat', names=['user', 'gender', 'age', 'occupation_code', 'zip'],
                         sep="::", engine='python')
 item_data = pd.read_csv(input_dir+'movies_extrainfos.dat', names=['item', 'title', 'year', 'rate', 'released', 'genre', 'director', 'writer', 'actors', 'plot', 'poster'],
