@@ -29,11 +29,12 @@ class DataHelper:
         query_xs_s = []
         query_ys_s = []
         query_mps_s = []
+        print('======111=========================', data_set)
 
         if data_set == 'yelp':
             training_set_size = int(
                 len(glob.glob("{}/{}/*.npy".format(data_dir, state))) / self.config['file_num'])  # support, query
-
+            print('======2222222=========================', training_set_size)
             # load all data
             for idx in tqdm(range(training_set_size)):
                 supp_xs_s.append(torch.from_numpy(np.load("{}/{}/support_x_{}.npy".format(data_dir, state, idx))))
