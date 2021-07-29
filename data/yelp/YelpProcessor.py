@@ -9,6 +9,7 @@ import random
 import pickle
 import os
 from tqdm import tqdm
+from collections import defaultdict
 
 # %%
 input_dir = 'original/'
