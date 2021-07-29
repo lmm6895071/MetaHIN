@@ -192,6 +192,16 @@ item_city.city.value_counts()
 item_category =  pd.read_csv(input_dir+'item_category.dat', names=['item','category'], sep='\t', engine='python')
 len(item_category)
 
+import collections
+from collections import defaultdict
+def reverse_dict(d):
+    # {1:[a,b,c], 2:[a,f,g],...}
+    re_d = collections.defaultdict(list)
+    for k, v_list in d.items():
+        for v in v_list:
+            re_d[v].append(k)
+    return dict(re_d)
+    
 # %%
 b_types = defaultdict(set)
 for index, row in item_category.iterrows():
@@ -275,15 +285,7 @@ np.save(output_dir+'item_feature_homo.npy',item_fea_homo)
 states = [ "warm_up", "user_cold_testing", "item_cold_testing", "user_and_item_cold_testing","meta_training"]
 
 # %%
-import collections
-from collections import defaultdict
-def reverse_dict(d):
-    # {1:[a,b,c], 2:[a,f,g],...}
-    re_d = collections.defaultdict(list)
-    for k, v_list in d.items():
-        for v in v_list:
-            re_d[v].append(k)
-    return dict(re_d)
+
 
 # %%
 tqdm._instances.clear()
