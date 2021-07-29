@@ -107,8 +107,8 @@ def evaluate(model, state, device='cpu'):
 
 if __name__ == "__main__":
     # data_set = 'dbook'
-    data_set = 'movielens'
-    # data_set = 'yelp'
+    # data_set = 'movielens'
+    data_set = 'yelp'
 
     input_dir = '../data/'
     output_dir = '../data/'
