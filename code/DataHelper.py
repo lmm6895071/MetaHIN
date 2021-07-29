@@ -32,8 +32,10 @@ class DataHelper:
         print('======111=========================', data_set)
 
         if data_set == 'yelp':
-            training_set_size = int(
-                len(glob.glob("{}/{}/*.npy".format(data_dir, state))) / self.config['file_num'])  # support, query
+            a = len(glob.glob("{}/{}/*.npy".format(data_dir, state)))
+            b = self.config['file_num']
+            print('-------------', a, b)
+            training_set_size = int(a/b)  # support, query
             print('======2222222=========================', training_set_size)
             # load all data
             for idx in tqdm(range(training_set_size)):
