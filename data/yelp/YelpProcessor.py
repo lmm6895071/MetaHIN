@@ -13,16 +13,24 @@ from tqdm import tqdm
 # %%
 input_dir = 'original/'
 output_dir = './'
-melu_output_dir = '../../../MeLU/yelp/'
+melu_output_dir = '../MeLU/movielens/'
 states = [ "warm_up", "user_cold_testing", "item_cold_testing", "user_and_item_cold_testing","meta_training"]
 
 if not os.path.exists("{}/meta_training/".format(output_dir)):
-    os.mkdir("{}/log/".format(output_dir))
+    if not os.path.exists("{}/log/".format(output_dir)):
+        os.mkdir("{}/log/".format(output_dir))
     for state in states:
-        os.mkdir("{}/{}/".format(output_dir, state))
-        os.mkdir("{}/{}/".format(melu_output_dir, state))
+        _path = "{}/{}/".format(output_dir, state)
+        if not os.path.exists(_path):
+            os.mkdir(_path)
+        _path = "{}/{}/".format(melu_output_dir, state)
+        if not os.path.exists(_path):
+            os.mkdir(_path)
         if not os.path.exists("{}/{}/{}".format(output_dir, "log", state)):
             os.mkdir("{}/{}/{}".format(output_dir, "log", state))
+            
+print('====================')
+
 
 # %%
 ui_data = pd.read_csv(input_dir+'rating.dat', names=['user', 'item', 'rating', 'timestamp'],sep="\t", engine='python')
@@ -266,15 +274,15 @@ np.save(output_dir+'item_feature_homo.npy',item_fea_homo)
 states = [ "warm_up", "user_cold_testing", "item_cold_testing", "user_and_item_cold_testing","meta_training"]
 
 # %%
-    import collections
-    from collections import defaultdict
-    def reverse_dict(d):
-        # {1:[a,b,c], 2:[a,f,g],...}
-        re_d = collections.defaultdict(list)
-        for k, v_list in d.items():
-            for v in v_list:
-                re_d[v].append(k)
-        return dict(re_d)
+import collections
+from collections import defaultdict
+def reverse_dict(d):
+    # {1:[a,b,c], 2:[a,f,g],...}
+    re_d = collections.defaultdict(list)
+    for k, v_list in d.items():
+        for v in v_list:
+            re_d[v].append(k)
+    return dict(re_d)
 
 # %%
 tqdm._instances.clear()
