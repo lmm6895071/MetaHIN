@@ -32,9 +32,10 @@ class DataHelper:
         print('======111=========================', data_set)
 
         if data_set == 'yelp':
-            a = len(glob.glob("{}/{}/*.npy".format(data_dir, state)))
+            z = glob.glob("{}/{}/*.npy".format(data_dir, state))
+            a = len(z)
             b = self.config['file_num']
-            print('-------------', a, b)
+            print('-------------', z, "{}/{}/*.npy".format(data_dir, state), a, b)
             training_set_size = int(a/b)  # support, query
             print('======2222222=========================', training_set_size)
             # load all data
